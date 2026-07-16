@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Team Prayas - Premium Animal Rescue & Adoption Shelter</title>
+  <!-- SEO Metadata -->
+  <meta name="description" content="Team Prayas is a premium animal rescue NGO in Surat. Adopt dogs, cats, or birds. Join Team Prayas as a volunteer or support our shelter.">
+  <meta name="keywords" content="animal shelter, adopt dog, adopt cat, animal rescue Surat, Team Prayas, volunteer NGO">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Split Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="main-header">
+    <div class="container header-container">
+      <a href="index.html" class="logo" id="nav-logo">
+        <i class="fa-solid fa-paw logo-icon"></i>
+        <span class="logo-text">Team <span class="accent-text">Prayas</span></span>
+      </a>
+      
+      <nav class="nav-menu" id="nav-menu-desktop">
+        <a href="index.html" class="nav-link active">Home</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="adoption.html" class="nav-link">Adopt</a>
+        <a href="gallery.html" class="nav-link">Gallery</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+        <a href="adoption.html" class="btn btn-gradient btn-nav">Apply Now</a>
+        
+        <!-- Subtle Admin Icon in top-right corner -->
+        <a href="admin.html" class="admin-login-nav-item" title="Admin Login" target="_blank">
+          <i class="fa-solid fa-lock"></i>
+        </a>
+      </nav>
+
+      <button class="mobile-nav-toggle" id="mobile-toggle" aria-label="Toggle navigation menu">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Slide Drawer Menu -->
+  <div class="mobile-menu-overlay" id="mobile-menu-overlay"></div>
+  <div class="mobile-menu-drawer" id="mobile-menu-drawer">
+    <div class="mobile-drawer-header">
+      <a href="index.html" class="logo">
+        <i class="fa-solid fa-paw logo-icon"></i>
+        <span class="logo-text">Team Prayas</span>
+      </a>
+      <button class="mobile-menu-close" id="mobile-close" aria-label="Close navigation menu">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <nav class="mobile-drawer-links">
+      <a href="index.html" class="mobile-link active">Home</a>
+      <a href="about.html" class="mobile-link">About</a>
+      <a href="adoption.html" class="mobile-link">Adopt</a>
+      <a href="gallery.html" class="mobile-link">Gallery</a>
+      <a href="contact.html" class="mobile-link">Contact</a>
+      <a href="adoption.html" class="btn btn-gradient mobile-cta">Apply Now</a>
+      
+      <!-- Subtle Admin Link inside Mobile Menu -->
+      <a href="admin.html" class="mobile-admin-link" target="_blank">
+        <i class="fa-solid fa-lock"></i> Admin Portal
+      </a>
+    </nav>
+  </div>
+
+  <!-- Main SPA Content Wrapper -->
+  <main class="main-content">
+    
+    <!-- Hero Section -->
+    <section class="hero-section" style="background-image: url('assets/images/hero_banner.jpg');">
+      <div class="hero-overlay"></div>
+      <div class="container hero-container">
+        <div class="hero-content animate-up">
+          <span class="hero-badge">Save A Rescued Pet</span>
+          <h1 class="hero-title">Adopt Love, Give Them Hope</h1>
+          <p class="hero-subtitle">Team Prayas is a premium green animal sanctuary based in Surat, spaying strays, providing trauma surgeries, and facilitating perfect family adoptions.</p>
+          <div class="hero-actions">
+            <a href="adoption.html" class="btn btn-gradient btn-large ripple">Apply for Adoption</a>
+            <a href="about.html" class="btn btn-outline-white btn-large ripple">Learn More</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mission & Statistics Counter -->
+    <section class="section-padding bg-white reveal">
+      <div class="container">
+        <div class="grid grid-2-col align-center">
+          <div>
+            <img src="assets/images/success_after.jpg" alt="Smiling rescued dog" class="img-rounded shadow-large img-cover">
+          </div>
+          <div>
+            <span class="section-subtitle">Our Purpose</span>
+            <h2 class="section-title">Rescuing the Neglected strays since 2018</h2>
+            <p class="section-desc">At Team Prayas, we rescue injured, neglected, and traumatized street animals around Surat, rehabilitate them at our Silent Zone shelter, spay/neuter them, and match them with loving homes.</p>
+            
+            <div class="margin-top-medium">
+              <a href="about.html" class="btn btn-outline-green ripple">Our Full Journey <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Statistics Section -->
+    <section class="stats-section section-padding">
+      <div class="container stats-grid">
+        <div class="stat-card" data-count="1250">
+          <div class="stat-card-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+          <div class="stat-number">1,250+</div>
+          <div class="stat-label">Animals Rescued</div>
+        </div>
+        <div class="stat-card" data-count="840">
+          <div class="stat-card-icon"><i class="fa-solid fa-house-chimney-user"></i></div>
+          <div class="stat-number">840+</div>
+          <div class="stat-label">Happy Adoptions</div>
+        </div>
+        <div class="stat-card" data-count="320">
+          <div class="stat-card-icon"><i class="fa-solid fa-handshake-angle"></i></div>
+          <div class="stat-number">320+</div>
+          <div class="stat-label">Active Volunteers</div>
+        </div>
+        <div class="stat-card" data-count="150">
+          <div class="stat-card-icon"><i class="fa-solid fa-hospital-user"></i></div>
+          <div class="stat-number">150+</div>
+          <div class="stat-label">Current Residents</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured Animals Preview Section -->
+    <section class="section-padding bg-light reveal">
+      <div class="container text-center">
+        <span class="section-subtitle">Adoptable Companions</span>
+        <h2 class="section-title">Meet Some of Our Pets</h2>
+        <p class="section-desc max-w-600">These beautiful souls are vaccinated, spayed/neutered, and waiting to become a part of your family.</p>
+        
+        <div class="animal-grid margin-top-large" id="home-featured-animals-grid">
+          <!-- Populated dynamically via adoption.js -->
+        </div>
+        
+        <div class="margin-top-large">
+          <a href="adoption.html" class="btn btn-outline-green ripple">View All Animals Available</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Adopter Testimonials Section -->
+    <section class="section-padding bg-white reveal">
+      <div class="container text-center">
+        <span class="section-subtitle">Testimonials</span>
+        <h2 class="section-title">Stories from Happy Homes</h2>
+        <p class="section-desc max-w-600">Nothing makes our rescue efforts more rewarding than seeing our pets thrive in their new permanent families.</p>
+        
+        <div class="testimonials-grid margin-top-large">
+          <div class="testimonial-card">
+            <p class="testimonial-text">Adopting Rocky has completely transformed our house. He has a lot of energy and fits perfectly into our green farmhouse in Dumas Road. Team Prayas supported us through the entire home verification process!</p>
+            <div class="testimonial-profile">
+              <div class="testimonial-avatar"><i class="fa-solid fa-user"></i></div>
+              <div class="text-left">
+                <h4 class="testimonial-name">Mishra Family</h4>
+                <span class="testimonial-pet">Adopted Rocky (Golden Retriever)</span>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <p class="testimonial-text">Luna was a tiny shivering kitten when Team Prayas rescued her from the monsoon streets. Today, she is a fluffy Persian princess who rules our sofa. Thank you Prayas for saving this precious life.</p>
+            <div class="testimonial-profile">
+              <div class="testimonial-avatar"><i class="fa-solid fa-user"></i></div>
+              <div class="text-left">
+                <h4 class="testimonial-name">Ritika Sharma</h4>
+                <span class="testimonial-pet">Adopted Luna (Persian Mix)</span>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <p class="testimonial-text">I was a first-time pet owner, and Team Prayas made everything incredibly easy. They provided a detailed medical passport log and vaccination card for Milo. The process was thorough and transparent.</p>
+            <div class="testimonial-profile">
+              <div class="testimonial-avatar"><i class="fa-solid fa-user"></i></div>
+              <div class="text-left">
+                <h4 class="testimonial-name">Priyesh Patel</h4>
+                <span class="testimonial-pet">Adopted Milo (Shorthair Cat)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Join Our Team Volunteer Section -->
+    <section class="section-padding bg-forest reveal">
+      <div class="container text-center">
+        <span class="section-subtitle" style="color:#A5D6A7;">Become A Caretaker</span>
+        <h2 class="section-title" style="color:var(--white);">Join the Rescue Mission</h2>
+        <p class="section-desc max-w-600" style="color:rgba(255,255,255,0.85); margin-bottom:40px;">Whether it is cleaning cages, assisting doctors, feeding puppies, or processing home audits, Team Prayas needs you.</p>
+        <a href="https://sites.google.com/view/teamprayas-adoptions/join-the-team?authuser=0" target="_blank" class="btn btn-outline-white btn-large ripple">
+          Join Team Prayas <i class="fa-solid fa-user-plus"></i>
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="main-footer">
+    <div class="container footer-grid">
+      <div class="footer-col footer-brand">
+        <a href="index.html" class="logo footer-logo">
+          <i class="fa-solid fa-paw logo-icon"></i>
+          <span class="logo-text">Team Prayas</span>
+        </a>
+        <p class="footer-desc">A premium green animal sanctuary in Surat dedicated to spaying, emergency trauma rescue, and permanent pet rehoming. Operating since 2018.</p>
+        <div class="social-icons">
+          <a href="https://www.instagram.com/teamprayas?igsh=amF1OXE2MnE0MHA1" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="https://www.facebook.com/PrayasINDIA/" target="_blank" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h3>Quick Links</h3>
+        <ul class="footer-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="adoption.html">Adopt Animals</a></li>
+          <li><a href="gallery.html">Photo Gallery</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h3>Surat Shelter Contact</h3>
+        <ul class="footer-contact-details">
+          <li><i class="fa-solid fa-phone"></i> <a href="tel:+919825119081" style="font-weight:700; color:var(--white);">+91 98251 19081</a></li>
+          <li><i class="fa-solid fa-envelope"></i> <a href="mailto:info@prayas-india.org">info@prayas-india.org</a></li>
+          <li><i class="fa-solid fa-location-dot"></i> 327 Silent Zone Plots, Opp. Airport, Dumas Road, Surat</li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <div class="container footer-bottom-container">
+        <p>&copy; 2026 Team Prayas - Rescue and Animal Adoption NGO. All rights reserved.</p>
+        <a href="admin.html" class="admin-portal-link" style="color:#81C784;" target="_blank"><i class="fa-solid fa-lock"></i> Administrator Portal</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/main.js"></script>
+  <script src="js/adoption.js"></script>
+</body>
+</html>
