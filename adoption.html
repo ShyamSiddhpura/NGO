@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adopt Animals - Team Prayas Surat Shelter</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Split Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  
+  <style>
+    /* Styling for the details and wizard modals */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 2000;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      padding: 24px;
+      overflow-y: auto;
+    }
+    .modal-overlay.active {
+      display: flex;
+    }
+    .modal-card {
+      background: var(--white);
+      border-radius: var(--border-radius-lg);
+      padding: 40px;
+      position: relative;
+      width: 100%;
+      max-width: 600px;
+      box-shadow: 0 30px 60px rgba(15, 23, 42, 0.2);
+    }
+    .modal-large {
+      max-width: 900px;
+    }
+    .modal-close-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 2.2rem;
+      background: transparent;
+      color: var(--muted-slate);
+      cursor: pointer;
+    }
+    .modal-close-btn:hover {
+      color: var(--primary-color);
+    }
+    
+    /* Details modal styles */
+    .details-modal-layout {
+      display: grid;
+      grid-template-columns: 1.2fr 1.5fr;
+      gap: 30px;
+    }
+    .details-modal-visual {
+      position: relative;
+      border-radius: var(--border-radius-md);
+      overflow: hidden;
+      height: 380px;
+    }
+    .details-modal-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .details-modal-tags {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      right: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .details-modal-info h2 {
+      font-size: 2rem;
+    }
+    .details-modal-subtitle {
+      color: var(--muted-slate);
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+    .details-divider {
+      height: 1px;
+      background: var(--border-color);
+      margin: 15px 0;
+    }
+    .details-meta-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 15px;
+    }
+    .meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .meta-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: var(--muted-slate);
+      letter-spacing: 0.5px;
+    }
+    .meta-val {
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+    .details-bio-text {
+      color: var(--muted-slate);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    /* Filter Panel controls */
+    .filter-panel {
+      background: var(--white);
+      border-radius: var(--border-radius-md);
+      padding: 24px;
+      margin-top: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      box-shadow: var(--card-shadow);
+      border: 1px solid rgba(15, 23, 42, 0.02);
+    }
+    .search-row {
+      position: relative;
+    }
+    .search-row input {
+      width: 100%;
+      padding: 14px 16px 14px 46px;
+      border-radius: 30px;
+      border: 1px solid #E2E8F0;
+      background: var(--light-bg);
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+    }
+    .search-row input:focus {
+      border-color: var(--primary-color);
+      background: var(--white);
+      box-shadow: 0 0 0 4px rgba(46, 125, 50, 0.1);
+    }
+    .search-icon {
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted-slate);
+      font-size: 1.1rem;
+    }
+    .options-row {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      align-items: flex-end;
+    }
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex: 1;
+      min-width: 160px;
+    }
+    .filter-group label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--dark-slate);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .filter-group select {
+      padding: 10px 14px;
+      border-radius: var(--border-radius-sm);
+      border: 1px solid #E2E8F0;
+      background: var(--light-bg);
+      cursor: pointer;
+    }
+
+    /* Adoption form wizard styles */
+    .wizard-steps-header {
+      display: flex;
+      background: var(--light-bg);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      border-radius: var(--border-radius-sm) var(--border-radius-sm) 0 0;
+      margin: -40px -40px 30px;
+      padding: 0 10px;
+    }
+    .wizard-step {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 20px 10px;
+      color: var(--muted-slate);
+      font-weight: 500;
+      font-size: 0.85rem;
+    }
+    .wizard-step.active {
+      color: var(--primary-color);
+      font-weight: 700;
+    }
+    .wizard-step.completed {
+      color: var(--primary-dark);
+    }
+    .step-dot {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--white);
+      border: 2px solid #E2E8F0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+    .wizard-step.active .step-dot {
+      border-color: var(--primary-color);
+      background-color: var(--primary-light);
+      color: var(--primary-color);
+    }
+    .wizard-step.completed .step-dot {
+      border-color: var(--primary-color);
+      background-color: var(--primary-color);
+      color: var(--white);
+    }
+    .wizard-panel {
+      display: none;
+    }
+    .wizard-panel.active {
+      display: block;
+    }
+    .panel-title {
+      font-size: 1.4rem;
+      margin-bottom: 5px;
+    }
+    .panel-subtitle {
+      font-size: 0.9rem;
+      color: var(--muted-slate);
+      margin-bottom: 25px;
+    }
+    
+    /* Form groups controls layout */
+    .form-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .form-group-row-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+    }
+    .form-group label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--dark-slate);
+    }
+    .required-label::after {
+      content: ' *';
+      color: var(--danger-color);
+    }
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%;
+      padding: 10px 14px;
+      border-radius: var(--border-radius-sm);
+      border: 1px solid #CBD5E1;
+      background: var(--white);
+      font-size: 0.95rem;
+      transition: border-color 0.3s ease;
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+      border-color: var(--primary-color);
+    }
+    .error-message {
+      font-size: 0.75rem;
+      color: var(--danger-color);
+      margin-top: 3px;
+      display: none;
+    }
+    .form-group.has-error input, .form-group.has-error select, .form-group.has-error textarea {
+      border-color: var(--danger-color);
+      background-color: #FFF5F5;
+    }
+    .form-group.has-error .error-message {
+      display: block;
+    }
+    .file-upload-wrapper {
+      position: relative;
+      width: 100%;
+      height: 90px;
+      border: 2px dashed #CBD5E1;
+      border-radius: var(--border-radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--light-bg);
+      cursor: pointer;
+    }
+    .file-upload-input {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: pointer;
+    }
+    .file-upload-design {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      color: var(--muted-slate);
+    }
+    .checkbox-container {
+      display: flex;
+      gap: 10px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      color: var(--muted-slate);
+    }
+    .checkbox-container input {
+      width: auto;
+      margin-top: 3px;
+    }
+    .wizard-footer {
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px solid rgba(0, 0, 0, 0.05);
+      margin-top: 25px;
+      padding-top: 20px;
+    }
+    .no-results-card {
+      background: var(--white);
+      padding: 60px 40px;
+      border-radius: var(--border-radius-md);
+      box-shadow: var(--card-shadow);
+      border: 1px solid rgba(15,23,42,0.02);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="main-header">
+    <div class="container header-container">
+      <a href="index.html" class="logo">
+        <i class="fa-solid fa-paw logo-icon"></i>
+        <span class="logo-text">Team <span class="accent-text">Prayas</span></span>
+      </a>
+      
+      <nav class="nav-menu" id="nav-menu-desktop">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="adoption.html" class="nav-link active">Adopt</a>
+        <a href="gallery.html" class="nav-link">Gallery</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+        <a href="adoption.html" class="btn btn-gradient btn-nav">Apply Now</a>
+        
+        <a href="admin.html" class="admin-login-nav-item" title="Admin Login" target="_blank">
+          <i class="fa-solid fa-lock"></i>
+        </a>
+      </nav>
+
+      <button class="mobile-nav-toggle" id="mobile-toggle" aria-label="Toggle navigation menu">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Slide Drawer Menu -->
+  <div class="mobile-menu-overlay" id="mobile-menu-overlay"></div>
+  <div class="mobile-menu-drawer" id="mobile-menu-drawer">
+    <div class="mobile-drawer-header">
+      <a href="index.html" class="logo">
+        <i class="fa-solid fa-paw logo-icon"></i>
+        <span class="logo-text">Team Prayas</span>
+      </a>
+      <button class="mobile-menu-close" id="mobile-close" aria-label="Close navigation menu">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <nav class="mobile-drawer-links">
+      <a href="index.html" class="mobile-link">Home</a>
+      <a href="about.html" class="mobile-link">About</a>
+      <a href="adoption.html" class="mobile-link active">Adopt</a>
+      <a href="gallery.html" class="mobile-link">Gallery</a>
+      <a href="contact.html" class="mobile-link">Contact</a>
+      <a href="adoption.html" class="btn btn-gradient mobile-cta">Apply Now</a>
+      
+      <a href="admin.html" class="mobile-admin-link" target="_blank">
+        <i class="fa-solid fa-lock"></i> Admin Portal
+      </a>
+    </nav>
+  </div>
+
+  <!-- Internal Hero Header -->
+  <section class="internal-hero" style="background-image: url('assets/images/gallery3.jpg');">
+    <div class="internal-hero-overlay"></div>
+    <div class="container text-center">
+      <h1 class="animate-up" style="font-size: 3rem;">Animals for Adoption</h1>
+      <p class="animate-up" style="margin-top: 10px; font-size: 1.15rem; color: rgba(255,255,255,0.9);">View our available shelter pets. Select a profile to read medical logs and start your application.</p>
+    </div>
+  </section>
+
+  <!-- Main Grid listings and Filters -->
+  <main class="page-offset-container" style="margin-top:0;">
+    
+    <div class="container section-padding">
+      
+      <!-- Filter panel container -->
+      <div class="filter-panel">
+        <div class="search-row">
+          <i class="fa-solid fa-magnifying-glass search-icon"></i>
+          <input type="text" id="pet-search" placeholder="Search by name, breed, or personality keywords...">
+        </div>
+        
+        <div class="options-row">
+          <div class="filter-group">
+            <label for="filter-type">Animal Type</label>
+            <select id="filter-type">
+              <option value="all">All Animals</option>
+              <option value="dog">Dogs</option>
+              <option value="cat">Cats</option>
+            </select>
+          </div>
+          
+          <div class="filter-group">
+            <label for="filter-gender">Gender</label>
+            <select id="filter-gender">
+              <option value="all">Any Gender</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </select>
+          </div>
+          
+          <div class="filter-group">
+            <label for="filter-age">Age Category</label>
+            <select id="filter-age">
+              <option value="all">Any Age</option>
+              <option value="Puppy/Kitten">Puppy/Kitten (&lt;1 yr)</option>
+              <option value="Young">Young (1-3 yrs)</option>
+              <option value="Adult">Adult (&gt;3 yrs)</option>
+            </select>
+          </div>
+          
+          <div class="filter-group">
+            <button class="btn btn-outline-green" style="padding: 10px 20px;" id="filter-reset">Clear Filters</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- dynamic Grid wrapper -->
+      <div class="animal-grid margin-top-large" id="adoption-listings-grid">
+        <!-- Rendered dynamically via js/adoption.js -->
+      </div>
+
+      <!-- No results card -->
+      <div id="no-animals-found" class="no-results-card text-center hidden margin-top-large">
+        <i class="fa-solid fa-face-frown" style="font-size:3.5rem; color:var(--muted-slate); margin-bottom:20px;"></i>
+        <h3>No pets found matching filters</h3>
+        <p>Try resetting filters or adjusting search keywords.</p>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ADOPTION MULTI-STEP WIZARD MODAL -->
+  <div class="modal-overlay" id="adoption-wizard-modal">
+    <div class="modal-card modal-large animate-up">
+      <button class="modal-close-btn" id="wizard-modal-close" aria-label="Close modal">&times;</button>
+      
+      <!-- Wizard Progress steps -->
+      <div class="wizard-steps-header">
+        <div class="wizard-step active" data-step="1">
+          <span class="step-dot">1</span>
+          <span class="step-label">Personal Details</span>
+        </div>
+        <div class="wizard-step" data-step="2">
+          <span class="step-dot">2</span>
+          <span class="step-label">Living & Address</span>
+        </div>
+        <div class="wizard-step" data-step="3">
+          <span class="step-dot">3</span>
+          <span class="step-label">Preferences</span>
+        </div>
+        <div class="wizard-step" data-step="4">
+          <span class="step-dot">4</span>
+          <span class="step-label">Agreement</span>
+        </div>
+      </div>
+
+      <!-- Adoption Wizard Form -->
+      <form id="adoption-wizard-form" novalidate>
+        
+        <!-- STEP 1: PERSONAL DETAILS -->
+        <div class="wizard-panel active" data-panel="1">
+          <h3 class="panel-title">Applicant Personal Info</h3>
+          <p class="panel-subtitle">Enter your name, date of birth, and contact information.</p>
+          
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="app-name" class="required-label">Full Name</label>
+              <input type="text" id="app-name" required placeholder="John Doe">
+              <span class="error-message">Full name must be at least 3 characters.</span>
+            </div>
+            
+            <div class="form-group-row-2">
+              <div class="form-group">
+                <label for="app-dob" class="required-label">Date of Birth</label>
+                <input type="date" id="app-dob" required>
+                <span class="error-message">Date of birth is required.</span>
+              </div>
+              <div class="form-group">
+                <label for="app-age" class="required-label">Age</label>
+                <input type="number" id="app-age" required min="18" max="100" placeholder="25">
+                <span class="error-message">You must be between 18 and 100 years old.</span>
+              </div>
+            </div>
+
+            <div class="form-group-row-2">
+              <div class="form-group">
+                <label for="app-gender" class="required-label">Gender</label>
+                <select id="app-gender" required>
+                  <option value="">Select Gender</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Other">Other</option>
+                </select>
+                <span class="error-message">Please select a gender.</span>
+              </div>
+              <div class="form-group">
+                <label for="app-phone" class="required-label">Phone Number</label>
+                <input type="tel" id="app-phone" required pattern="^[0-9]{10}$" placeholder="9825112345">
+                <span class="error-message">Please enter a valid 10-digit mobile number.</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="app-email" class="required-label">Email Address</label>
+              <input type="email" id="app-email" required placeholder="john.doe@example.com">
+              <span class="error-message">Please enter a valid email address.</span>
+            </div>
+          </div>
+
+          <div class="wizard-footer">
+            <span></span>
+            <button type="button" class="btn btn-gradient btn-next" data-next="2">Next Step <i class="fa-solid fa-arrow-right"></i></button>
+          </div>
+        </div>
+
+        <!-- STEP 2: ADDRESS & RESIDENCE -->
+        <div class="wizard-panel" data-panel="2">
+          <h3 class="panel-title">Living Situation & Address</h3>
+          <p class="panel-subtitle">Provide details about your current house situation.</p>
+          
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="app-address" class="required-label">Street Address</label>
+              <input type="text" id="app-address" required placeholder="Flat / Plot No., Society, Road">
+              <span class="error-message">Street address is required.</span>
+            </div>
+            
+            <div class="form-group-row-2">
+              <div class="form-group">
+                <label for="app-city" class="required-label">City</label>
+                <input type="text" id="app-city" required placeholder="Surat">
+                <span class="error-message">City name is required.</span>
+              </div>
+              <div class="form-group">
+                <label for="app-state" class="required-label">State</label>
+                <input type="text" id="app-state" required placeholder="Gujarat">
+                <span class="error-message">State name is required.</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="app-occupation" class="required-label">Occupation</label>
+              <input type="text" id="app-occupation" required placeholder="Doctor, Business, Engineer...">
+              <span class="error-message">Occupation field is required.</span>
+            </div>
+
+            <div class="form-group-row-2">
+              <div class="form-group">
+                <label for="app-house-type" class="required-label">Type of Residence</label>
+                <select id="app-house-type" required>
+                  <option value="">Select Residence</option>
+                  <option value="Apartment">Apartment</option>
+                  <option value="Independent House">Independent House</option>
+                  <option value="Villa">Villa / Farmhouse</option>
+                </select>
+                <span class="error-message">Please select house type.</span>
+              </div>
+              <div class="form-group">
+                <label for="app-own-rent" class="required-label">Ownership Status</label>
+                <select id="app-own-rent" required>
+                  <option value="">Select Ownership</option>
+                  <option value="Own">Owned</option>
+                  <option value="Rent">Rented</option>
+                </select>
+                <span class="error-message">Please select ownership status.</span>
+              </div>
+            </div>
+
+            <div class="form-group-row-2">
+              <div class="form-group">
+                <label for="app-family" class="required-label">Family Members Count</label>
+                <input type="number" id="app-family" required min="1" max="20" placeholder="4">
+                <span class="error-message">Please enter count between 1 and 20.</span>
+              </div>
+              <div class="form-group">
+                <label for="app-existing-pets">Existing Pets (If any)</label>
+                <input type="text" id="app-existing-pets" placeholder="e.g. 1 Dog, None">
+              </div>
+            </div>
+          </div>
+
+          <div class="wizard-footer">
+            <button type="button" class="btn btn-secondary btn-prev" data-prev="1"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+            <button type="button" class="btn btn-gradient btn-next" data-next="3">Next Step <i class="fa-solid fa-arrow-right"></i></button>
+          </div>
+        </div>
+
+        <!-- STEP 3: PREFERENCES & PET EXPERIENCE -->
+        <div class="wizard-panel" data-panel="3">
+          <h3 class="panel-title">Preferences & Experience</h3>
+          <p class="panel-subtitle">Select details of the animal you wish to adopt.</p>
+          
+          <div class="form-grid">
+            <div class="form-group-row-2">
+              <div class="form-group">
+                <label for="app-pref-animal" class="required-label">Preferred Animal</label>
+                <select id="app-pref-animal" required>
+                  <option value="">Select Type</option>
+                  <option value="Dog">Dog</option>
+                  <option value="Cat">Cat</option>
+                  <option value="Rabbit">Rabbit</option>
+                  <option value="Bird">Bird</option>
+                  <option value="Other">Other</option>
+                </select>
+                <span class="error-message">Please select preferred animal.</span>
+              </div>
+              <div class="form-group">
+                <label for="app-pref-breed" class="required-label">Preferred Breed</label>
+                <input type="text" id="app-pref-breed" required placeholder="e.g. Retriever, Indie, Mixed">
+                <span class="error-message">Please enter preferred breed.</span>
+              </div>
+            </div>
+
+            <div class="form-group-row-2">
+              <div class="form-group">
+                <label for="app-pref-age" class="required-label">Preferred Age Group</label>
+                <select id="app-pref-age" required>
+                  <option value="">Select Age Group</option>
+                  <option value="Puppy / Kitten">Puppy / Kitten (&lt;1 yr)</option>
+                  <option value="Young">Young (1-3 yrs)</option>
+                  <option value="Adult">Adult (&gt;3 yrs)</option>
+                </select>
+                <span class="error-message">Please select age preference.</span>
+              </div>
+              <div class="form-group">
+                <label for="app-pref-gender" class="required-label">Preferred Gender</label>
+                <select id="app-pref-gender" required>
+                  <option value="">Select Gender</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Any">No Preference</option>
+                </select>
+                <span class="error-message">Please select gender preference.</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="app-experience" class="required-label">Pet Experience Level</label>
+              <select id="app-experience" required>
+                <option value="">Select Experience</option>
+                <option value="First-time owner">First-time Owner</option>
+                <option value="Have owned pets before">Have owned pets before</option>
+                <option value="Currently own pets">Currently own pets</option>
+              </select>
+              <span class="error-message">Please select experience level.</span>
+            </div>
+
+            <div class="form-group">
+              <label for="app-reason" class="required-label">Reason for Adoption</label>
+              <textarea id="app-reason" rows="3" required placeholder="Tell us why you want to adopt..."></textarea>
+              <span class="error-message">Please enter a valid reason (min 15 characters).</span>
+            </div>
+          </div>
+
+          <div class="wizard-footer">
+            <button type="button" class="btn btn-secondary btn-prev" data-prev="2"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+            <button type="button" class="btn btn-gradient btn-next" data-next="4">Next Step <i class="fa-solid fa-arrow-right"></i></button>
+          </div>
+        </div>
+
+        <!-- STEP 4: REGISTRATION & SUBMISSION -->
+        <div class="wizard-panel" data-panel="4">
+          <h3 class="panel-title">Verification & Agreement</h3>
+          <p class="panel-subtitle">Upload ID verification details to submit application.</p>
+          
+          <div class="form-grid">
+            <div class="form-group-row-2">
+              <div class="form-group">
+                <label for="app-financial" class="required-label">Financial Readiness</label>
+                <select id="app-financial" required>
+                  <option value="">Select Readiness</option>
+                  <option value="Ready">Yes, fully prepared for food/medical costs</option>
+                  <option value="Unsure">Somewhat prepared</option>
+                </select>
+                <span class="error-message">Please select financial readiness status.</span>
+              </div>
+              <div class="form-group">
+                <label for="app-time" class="required-label">Daily Time Availability</label>
+                <input type="text" id="app-time" required placeholder="e.g. 4 hours, all day">
+                <span class="error-message">This field is required.</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="app-emergency" class="required-label">Emergency Contact Info</label>
+              <input type="text" id="app-emergency" required placeholder="Relation, Name, Phone Number">
+              <span class="error-message">Please provide emergency contact details.</span>
+            </div>
+
+            <div class="form-group">
+              <label for="app-notes">Additional Notes</label>
+              <input type="text" id="app-notes" placeholder="Any extra information...">
+            </div>
+
+            <div class="form-group">
+              <label for="app-photo" class="required-label">Upload ID Proof (Aadhar / Driving License)</label>
+              <div class="file-upload-wrapper">
+                <input type="file" id="app-photo" accept="image/*" required class="file-upload-input">
+                <div class="file-upload-design">
+                  <i class="fa-solid fa-cloud-arrow-up" style="font-size: 1.8rem; color:var(--primary-color);"></i>
+                  <span id="file-upload-label">Choose ID file...</span>
+                </div>
+              </div>
+              <span class="error-message">Please upload a valid image file.</span>
+            </div>
+
+            <div class="form-group terms-checkbox-group">
+              <label class="checkbox-container">
+                <input type="checkbox" id="app-terms" required>
+                <span class="checkbox-text">I declare that all provided details are true, and I agree to cooperate with Team Prayas home checks.</span>
+              </label>
+              <span class="error-message" style="margin-top:8px;">You must accept the declaration to submit.</span>
+            </div>
+          </div>
+
+          <div class="wizard-footer">
+            <button type="button" class="btn btn-secondary btn-prev" data-prev="3"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+            <button type="submit" class="btn btn-gradient btn-submit" id="submit-wizard-btn">Submit Application <i class="fa-solid fa-circle-check"></i></button>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="main-footer">
+    <div class="container footer-grid">
+      <div class="footer-col footer-brand">
+        <a href="index.html" class="logo footer-logo">
+          <i class="fa-solid fa-paw logo-icon"></i>
+          <span class="logo-text">Team Prayas</span>
+        </a>
+        <p class="footer-desc">A premium green animal sanctuary in Surat dedicated to spaying, emergency trauma rescue, and permanent pet rehoming. Operating since 2018.</p>
+        <div class="social-icons">
+          <a href="https://www.instagram.com/teamprayas?igsh=amF1OXE2MnE0MHA1" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="https://www.facebook.com/PrayasINDIA/" target="_blank" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h3>Quick Links</h3>
+        <ul class="footer-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="adoption.html">Adopt Animals</a></li>
+          <li><a href="gallery.html">Photo Gallery</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h3>Surat Shelter Contact</h3>
+        <ul class="footer-contact-details">
+          <li><i class="fa-solid fa-phone"></i> <a href="tel:+919825119081" style="font-weight:700; color:var(--white);">+91 98251 19081</a></li>
+          <li><i class="fa-solid fa-envelope"></i> <a href="mailto:info@prayas-india.org">info@prayas-india.org</a></li>
+          <li><i class="fa-solid fa-location-dot"></i> 327 Silent Zone Plots, Opp. Airport, Dumas Road, Surat</li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <div class="container footer-bottom-container">
+        <p>&copy; 2026 Team Prayas - Rescue and Animal Adoption NGO. All rights reserved.</p>
+        <a href="admin.html" class="admin-portal-link" style="color:#81C784;" target="_blank"><i class="fa-solid fa-lock"></i> Administrator Portal</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/main.js"></script>
+  <script src="js/adoption.js"></script>
+</body>
+</html>

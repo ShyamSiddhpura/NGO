@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us - Team Prayas Animal Shelter</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Split Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  
+  <style>
+    /* FAQ Accordion styles */
+    .faq-container {
+      max-width: 900px;
+      margin: 50px auto 0;
+    }
+    .faq-accordion {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    .faq-item {
+      background: var(--white);
+      border-radius: var(--border-radius-sm);
+      box-shadow: var(--card-shadow);
+      border: 1px solid rgba(15, 23, 42, 0.03);
+      overflow: hidden;
+    }
+    .faq-question {
+      width: 100%;
+      text-align: left;
+      padding: 20px 25px;
+      background: var(--white);
+      font-weight: 600;
+      font-size: 1.05rem;
+      color: var(--dark-slate);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+    }
+    .faq-question:hover {
+      background: var(--primary-light);
+      color: var(--primary-color);
+    }
+    .faq-arrow {
+      transition: transform 0.3s ease;
+      color: var(--muted-slate);
+    }
+    .faq-item.active .faq-arrow {
+      transform: rotate(180deg);
+      color: var(--primary-color);
+    }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out;
+      border-top: 1px solid rgba(0,0,0,0.02);
+    }
+    .faq-answer p {
+      padding: 20px 25px;
+      color: var(--muted-slate);
+      font-size: 0.95rem;
+    }
+    .faq-item.active .faq-answer {
+      max-height: 200px;
+    }
+    
+    /* Contact grid layouts */
+    .contact-details {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .contact-card {
+      background: var(--white);
+      padding: 25px;
+      border-radius: var(--border-radius-md);
+      box-shadow: var(--card-shadow);
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      border: 1px solid rgba(15, 23, 42, 0.02);
+    }
+    .contact-card .card-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background-color: var(--primary-light);
+      color: var(--primary-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      flex-shrink: 0;
+    }
+    .contact-card h3 {
+      font-size: 1.1rem;
+      margin-bottom: 5px;
+    }
+    .contact-card p {
+      font-size: 0.95rem;
+      color: var(--dark-slate);
+    }
+    .tel-number {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--primary-color);
+    }
+    .detail-muted {
+      font-size: 0.8rem;
+      color: var(--muted-slate);
+      margin-top: 2px;
+    }
+    
+    .maps-container {
+      border-radius: var(--border-radius-md);
+      overflow: hidden;
+      height: 250px;
+      box-shadow: var(--card-shadow);
+    }
+    .form-group.has-error input, .form-group.has-error textarea {
+      border-color: var(--danger-color);
+      background-color: #FFF5F5;
+    }
+    .form-group.has-error .error-message {
+      display: block;
+      font-size: 0.75rem;
+      color: var(--danger-color);
+      margin-top: 3px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="main-header">
+    <div class="container header-container">
+      <a href="index.html" class="logo">
+        <i class="fa-solid fa-paw logo-icon"></i>
+        <span class="logo-text">Team <span class="accent-text">Prayas</span></span>
+      </a>
+      
+      <nav class="nav-menu" id="nav-menu-desktop">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="adoption.html" class="nav-link">Adopt</a>
+        <a href="gallery.html" class="nav-link">Gallery</a>
+        <a href="contact.html" class="nav-link active">Contact</a>
+        <a href="adoption.html" class="btn btn-gradient btn-nav">Apply Now</a>
+        
+        <a href="admin.html" class="admin-login-nav-item" title="Admin Login" target="_blank">
+          <i class="fa-solid fa-lock"></i>
+        </a>
+      </nav>
+
+      <button class="mobile-nav-toggle" id="mobile-toggle" aria-label="Toggle navigation menu">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Slide Drawer Menu -->
+  <div class="mobile-menu-overlay" id="mobile-menu-overlay"></div>
+  <div class="mobile-menu-drawer" id="mobile-menu-drawer">
+    <div class="mobile-drawer-header">
+      <a href="index.html" class="logo">
+        <i class="fa-solid fa-paw logo-icon"></i>
+        <span class="logo-text">Team Prayas</span>
+      </a>
+      <button class="mobile-menu-close" id="mobile-close" aria-label="Close navigation menu">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <nav class="mobile-drawer-links">
+      <a href="index.html" class="mobile-link">Home</a>
+      <a href="about.html" class="mobile-link">About</a>
+      <a href="adoption.html" class="mobile-link">Adopt</a>
+      <a href="gallery.html" class="mobile-link">Gallery</a>
+      <a href="contact.html" class="mobile-link active">Contact</a>
+      <a href="adoption.html" class="btn btn-gradient mobile-cta">Apply Now</a>
+      
+      <a href="admin.html" class="mobile-admin-link" target="_blank">
+        <i class="fa-solid fa-lock"></i> Admin Portal
+      </a>
+    </nav>
+  </div>
+
+  <!-- Internal Hero Header banner -->
+  <section class="internal-hero" style="background-image: url('assets/images/gallery2.jpg');">
+    <div class="internal-hero-overlay"></div>
+    <div class="container text-center">
+      <h1 class="animate-up" style="font-size: 3rem;">Contact Us</h1>
+      <p class="animate-up" style="margin-top: 10px; font-size: 1.15rem; color: rgba(255,255,255,0.9);">Reach our Surat shelter for emergency rescue reporting or volunteer queries.</p>
+    </div>
+  </section>
+
+  <!-- Main Contacts panel grids -->
+  <main class="page-offset-container" style="margin-top:0;">
+    <div class="container section-padding">
+      
+      <div class="grid grid-2-col">
+        
+        <!-- Left details panel -->
+        <div class="contact-details">
+          <div class="contact-card">
+            <div class="card-icon"><i class="fa-solid fa-phone"></i></div>
+            <div class="card-text">
+              <h3>Emergency Rescue Helpline</h3>
+              <a href="tel:+919825119081" class="tel-number">+91 98251 19081</a>
+              <p class="detail-muted">Click to call immediately for injured strays in Surat</p>
+            </div>
+          </div>
+          <div class="contact-card">
+            <div class="card-icon"><i class="fa-solid fa-envelope"></i></div>
+            <div class="card-text">
+              <h3>Official Email Address</h3>
+              <a href="mailto:info@prayas-india.org" style="font-weight:600; color:var(--primary-color);">info@prayas-india.org</a>
+              <p class="detail-muted">For adoptions, partnerships, or corporate sponsorships</p>
+            </div>
+          </div>
+          <div class="contact-card">
+            <div class="card-icon"><i class="fa-solid fa-location-dot"></i></div>
+            <div class="card-text">
+              <h3>Surat Shelter Location</h3>
+              <p>327 Silent Zone Plots, Opp. Airport, Dumas Road, Surat</p>
+              <div class="margin-top-small">
+                <a href="https://maps.app.goo.gl/ZxEtbBeLb3CZtA5S8?g_st=iw" target="_blank" class="btn btn-secondary" style="padding: 8px 16px; font-size:0.85rem;">
+                  View on Google Maps <i class="fa-solid fa-map-location-dot"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Embedded Google Map -->
+          <div class="maps-container">
+            <iframe src="https://www.google.com/maps/embed?pb=!11m18!1m12!1m3!1d3722.2599767228807!2d72.7483861!3d21.1021464!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be053075d50699d%3A0xe6bf446d6d2b3c2e!2sDumas%20Rd%2C%20Surat%2C%20Gujarat!5e0!3m2!1sen!2sin!4v1690000000000!5m2!1sen!2sin" width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+        </div>
+
+        <!-- Right query contact form panel -->
+        <div class="card shadow-large">
+          <h2 style="font-size: 1.6rem; border-bottom: 2px solid var(--primary-light); padding-bottom: 10px; margin-bottom: 20px;">Send Us a Message</h2>
+          
+          <form id="contact-us-form" novalidate>
+            <div class="form-grid">
+              <div class="form-group" id="group-name">
+                <label for="c-name" class="required-label">Your Name</label>
+                <input type="text" id="c-name" placeholder="John Doe" required>
+                <span class="error-message">Name must be at least 3 characters.</span>
+              </div>
+              <div class="form-group" id="group-email">
+                <label for="c-email" class="required-label">Email Address</label>
+                <input type="email" id="c-email" placeholder="john.doe@example.com" required>
+                <span class="error-message">Please enter a valid email address.</span>
+              </div>
+              <div class="form-group" id="group-phone">
+                <label for="c-phone" class="required-label">Phone Number</label>
+                <input type="tel" id="c-phone" placeholder="9825112345" required>
+                <span class="error-message">Please enter a valid 10-digit mobile number.</span>
+              </div>
+              <div class="form-group" id="group-subject">
+                <label for="c-subject" class="required-label">Subject</label>
+                <input type="text" id="c-subject" placeholder="Rescue Alert / Adoption Inquiry" required>
+                <span class="error-message">Subject is required.</span>
+              </div>
+              <div class="form-group" id="group-message">
+                <label for="c-message" class="required-label">Message</label>
+                <textarea id="c-message" rows="4" placeholder="Detail your message here..." required></textarea>
+                <span class="error-message">Message must be at least 10 characters long.</span>
+              </div>
+              
+              <button type="submit" class="btn btn-gradient btn-full margin-top-small">
+                Send Message <i class="fa-regular fa-paper-plane"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+
+      </div>
+
+      <!-- FAQ Accordion section -->
+      <div class="faq-container">
+        <h2 class="text-center section-title" style="margin-bottom:30px;">Frequently Asked Questions</h2>
+        
+        <div class="faq-accordion">
+          <div class="faq-item">
+            <button class="faq-question">What is the adoption process at Team Prayas? <i class="fa-solid fa-chevron-down faq-arrow"></i></button>
+            <div class="faq-answer">
+              <p>Our process begins with filling out the online adoption registration form under the 'Adopt' page. Once submitted, our coordinator contacts you for a telephonic discussion, followed by a physical home check on your Surat residence. Once approved, you can visit the shelter on Dumas Road to pick up your companion.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question">Are there adoption fees? <i class="fa-solid fa-chevron-down faq-arrow"></i></button>
+            <div class="faq-answer">
+              <p>No! Adoption is entirely free. However, we appreciate voluntary donations that directly go toward providing medical treatment for other injured strays inside our shelter.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question">What does "vaccinated & sterilized" mean? <i class="fa-solid fa-chevron-down faq-arrow"></i></button>
+            <div class="faq-answer">
+              <p>All adult animals are sterilised (spayed for females, neutered for males) to prevent reproduction and improve biological health. All animals undergo a primary immunization course (7-in-1 vaccine for dogs, Tricat for cats, and Rabies vaccine) with detailed medical passport logs provided to adopters.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="main-footer">
+    <div class="container footer-grid">
+      <div class="footer-col footer-brand">
+        <a href="index.html" class="logo footer-logo">
+          <i class="fa-solid fa-paw logo-icon"></i>
+          <span class="logo-text">Team Prayas</span>
+        </a>
+        <p class="footer-desc">A premium green animal sanctuary in Surat dedicated to spaying, emergency trauma rescue, and permanent pet rehoming. Operating since 2018.</p>
+        <div class="social-icons">
+          <a href="https://www.instagram.com/teamprayas?igsh=amF1OXE2MnE0MHA1" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="https://www.facebook.com/PrayasINDIA/" target="_blank" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h3>Quick Links</h3>
+        <ul class="footer-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="adoption.html">Adopt Animals</a></li>
+          <li><a href="gallery.html">Photo Gallery</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h3>Surat Shelter Contact</h3>
+        <ul class="footer-contact-details">
+          <li><i class="fa-solid fa-phone"></i> <a href="tel:+919825119081" style="font-weight:700; color:var(--white);">+91 98251 19081</a></li>
+          <li><i class="fa-solid fa-envelope"></i> <a href="mailto:info@prayas-india.org">info@prayas-india.org</a></li>
+          <li><i class="fa-solid fa-location-dot"></i> 327 Silent Zone Plots, Opp. Airport, Dumas Road, Surat</li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <div class="container footer-bottom-container">
+        <p>&copy; 2026 Team Prayas - Rescue and Animal Adoption NGO. All rights reserved.</p>
+        <a href="admin.html" class="admin-portal-link" style="color:#81C784;" target="_blank"><i class="fa-solid fa-lock"></i> Administrator Portal</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/main.js"></script>
+  
+  <!-- Inline form validator -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      initContactFormValidation();
+      initFAQAccordion();
+    });
+
+    function initContactFormValidation() {
+      const form = document.getElementById("contact-us-form");
+      if (!form) return;
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const name = document.getElementById("c-name");
+        const email = document.getElementById("c-email");
+        const phone = document.getElementById("c-phone");
+        const subject = document.getElementById("c-subject");
+        const message = document.getElementById("c-message");
+
+        let isValid = true;
+
+        isValid &= checkField(name, name.value.trim().length >= 3, "group-name");
+        isValid &= checkField(email, /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value), "group-email");
+        isValid &= checkField(phone, /^[0-9]{10}$/.test(phone.value), "group-phone");
+        isValid &= checkField(subject, subject.value.trim().length > 0, "group-subject");
+        isValid &= checkField(message, message.value.trim().length >= 10, "group-message");
+
+        if (isValid) {
+          showToast("Message sent successfully! We will get back to you shortly.", "success");
+          form.reset();
+        } else {
+          showToast("Please correct highlighted form errors.", "error");
+        }
+      });
+    }
+
+    function checkField(element, condition, groupId) {
+      const group = document.getElementById(groupId);
+      if (!group) return condition;
+
+      if (condition) {
+        group.classList.remove("has-error");
+        return true;
+      } else {
+        group.classList.add("has-error");
+        return false;
+      }
+    }
+
+    function initFAQAccordion() {
+      const questions = document.querySelectorAll(".faq-question");
+      questions.forEach(q => {
+        q.addEventListener("click", () => {
+          const item = q.parentElement;
+          const isOpen = item.classList.contains("active");
+
+          document.querySelectorAll(".faq-item").forEach(el => {
+            el.classList.remove("active");
+            el.querySelector(".faq-answer").style.maxHeight = null;
+          });
+
+          if (!isOpen) {
+            item.classList.add("active");
+            const ans = item.querySelector(".faq-answer");
+            ans.style.maxHeight = ans.scrollHeight + "px";
+          }
+        });
+      });
+    }
+  </style>
+</body>
+</html>

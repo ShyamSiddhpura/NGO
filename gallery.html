@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Photo Gallery - Team Prayas Animal Shelter</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Split Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  
+  <style>
+    /* Category Filter Navigation Bar styling */
+    .filter-tabs-row {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+    }
+    .filter-btn {
+      padding: 10px 20px;
+      font-weight: 600;
+      border-radius: 20px;
+      background-color: var(--white);
+      border: 1px solid var(--border-color);
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
+    .filter-btn.active, .filter-btn:hover {
+      background-color: var(--primary-color);
+      color: var(--white);
+      border-color: var(--primary-color);
+    }
+    
+    /* Responsive Gallery Grid layout */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+    .gallery-item {
+      position: relative;
+      border-radius: var(--border-radius-md);
+      overflow: hidden;
+      height: 250px;
+      cursor: pointer;
+      box-shadow: var(--card-shadow);
+      transition: transform 0.4s ease;
+    }
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+    .gallery-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(46, 125, 50, 0.85);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      color: var(--white);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .overlay-icon {
+      font-size: 2rem;
+      transform: scale(0.8);
+      transition: transform 0.3s ease;
+    }
+    .gallery-overlay span {
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+    .gallery-item:hover img {
+      transform: scale(1.08);
+    }
+    .gallery-item:hover .gallery-overlay {
+      opacity: 1;
+    }
+    .gallery-item:hover .overlay-icon {
+      transform: scale(1);
+    }
+
+    /* Lightbox modal zoom viewing overlay styles */
+    .lightbox-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(9, 13, 22, 0.95);
+      z-index: 2000;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      padding: 40px;
+    }
+    .lightbox-modal.active {
+      display: flex;
+    }
+    .lightbox-close {
+      position: absolute;
+      top: 30px;
+      right: 30px;
+      background: transparent;
+      color: var(--white);
+      font-size: 2.5rem;
+      cursor: pointer;
+    }
+    .lightbox-close:hover {
+      color: var(--primary-color);
+    }
+    .lightbox-prev, .lightbox-next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--white);
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .lightbox-prev:hover, .lightbox-next:hover {
+      background-color: var(--primary-color);
+    }
+    .lightbox-prev { left: 40px; }
+    .lightbox-next { right: 40px; }
+    
+    .lightbox-content {
+      max-width: 800px;
+      max-height: 80vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+    }
+    #lightbox-img {
+      max-width: 100%;
+      max-height: 70vh;
+      object-fit: contain;
+      border-radius: 8px;
+    }
+    #lightbox-caption {
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 1.05rem;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="main-header">
+    <div class="container header-container">
+      <a href="index.html" class="logo">
+        <i class="fa-solid fa-paw logo-icon"></i>
+        <span class="logo-text">Team <span class="accent-text">Prayas</span></span>
+      </a>
+      
+      <nav class="nav-menu" id="nav-menu-desktop">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="adoption.html" class="nav-link">Adopt</a>
+        <a href="gallery.html" class="nav-link active">Gallery</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+        <a href="adoption.html" class="btn btn-gradient btn-nav">Apply Now</a>
+        
+        <a href="admin.html" class="admin-login-nav-item" title="Admin Login" target="_blank">
+          <i class="fa-solid fa-lock"></i>
+        </a>
+      </nav>
+
+      <button class="mobile-nav-toggle" id="mobile-toggle" aria-label="Toggle navigation menu">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Slide Drawer -->
+  <div class="mobile-menu-overlay" id="mobile-menu-overlay"></div>
+  <div class="mobile-menu-drawer" id="mobile-menu-drawer">
+    <div class="mobile-drawer-header">
+      <a href="index.html" class="logo">
+        <i class="fa-solid fa-paw logo-icon"></i>
+        <span class="logo-text">Team Prayas</span>
+      </a>
+      <button class="mobile-menu-close" id="mobile-close" aria-label="Close navigation menu">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <nav class="mobile-drawer-links">
+      <a href="index.html" class="mobile-link">Home</a>
+      <a href="about.html" class="mobile-link">About</a>
+      <a href="adoption.html" class="mobile-link">Adopt</a>
+      <a href="gallery.html" class="mobile-link active">Gallery</a>
+      <a href="contact.html" class="mobile-link">Contact</a>
+      <a href="adoption.html" class="btn btn-gradient mobile-cta">Apply Now</a>
+      
+      <a href="admin.html" class="mobile-admin-link" target="_blank">
+        <i class="fa-solid fa-lock"></i> Admin Portal
+      </a>
+    </nav>
+  </div>
+
+  <!-- Internal Hero Header banner -->
+  <section class="internal-hero" style="background-image: url('assets/images/gallery1.jpg');">
+    <div class="internal-hero-overlay"></div>
+    <div class="container text-center">
+      <h1 class="animate-up" style="font-size: 3rem;">Photo Gallery</h1>
+      <p class="animate-up" style="margin-top: 10px; font-size: 1.15rem; color: rgba(255,255,255,0.9);">Visual stories from our shelter operations, medical checks, and volunteer feeds.</p>
+    </div>
+  </section>
+
+  <!-- Gallery list content -->
+  <main class="page-offset-container" style="margin-top:0;">
+    <div class="container section-padding">
+      
+      <!-- Category switchers row -->
+      <div class="filter-tabs-row">
+        <button class="filter-btn active" data-filter="all">All Photos</button>
+        <button class="filter-btn" data-filter="rescues">Rescues</button>
+        <button class="filter-btn" data-filter="shelter">Shelter Life</button>
+        <button class="filter-btn" data-filter="community">Community Work</button>
+        <button class="filter-btn" data-filter="adoptions">Adoptions</button>
+      </div>
+
+      <!-- Responsive Grid layout -->
+      <div class="gallery-grid">
+        <div class="gallery-item" data-category="community">
+          <img src="assets/images/gallery1.jpg" alt="Dog feeding program" loading="lazy">
+          <div class="gallery-overlay">
+            <i class="fa-solid fa-magnifying-glass-plus overlay-icon"></i>
+            <span>Dog Feeding Program</span>
+          </div>
+        </div>
+        <div class="gallery-item" data-category="shelter">
+          <img src="assets/images/gallery2.jpg" alt="Shelter bathing session" loading="lazy">
+          <div class="gallery-overlay">
+            <i class="fa-solid fa-magnifying-glass-plus overlay-icon"></i>
+            <span>Grooming & Bathing</span>
+          </div>
+        </div>
+        <div class="gallery-item" data-category="adoptions">
+          <img src="assets/images/gallery3.jpg" alt="Adoption Match smiling" loading="lazy">
+          <div class="gallery-overlay">
+            <i class="fa-solid fa-magnifying-glass-plus overlay-icon"></i>
+            <span>A Happy Adoption Match</span>
+          </div>
+        </div>
+        <div class="gallery-item" data-category="shelter">
+          <img src="assets/images/gallery4.jpg" alt="Medical unit checkups" loading="lazy">
+          <div class="gallery-overlay">
+            <i class="fa-solid fa-magnifying-glass-plus overlay-icon"></i>
+            <span>Medical Checkup Unit</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Zoom Lightbox Viewer modal -->
+  <div class="lightbox-modal" id="lightbox-modal">
+    <button class="lightbox-close" id="lightbox-close" aria-label="Close image"><i class="fa-solid fa-xmark"></i></button>
+    <button class="lightbox-prev" id="lightbox-prev" aria-label="Previous image"><i class="fa-solid fa-chevron-left"></i></button>
+    <button class="lightbox-next" id="lightbox-next" aria-label="Next image"><i class="fa-solid fa-chevron-right"></i></button>
+    <div class="lightbox-content">
+      <img src="" alt="" id="lightbox-img">
+      <p id="lightbox-caption"></p>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="main-footer">
+    <div class="container footer-grid">
+      <div class="footer-col footer-brand">
+        <a href="index.html" class="logo footer-logo">
+          <i class="fa-solid fa-paw logo-icon"></i>
+          <span class="logo-text">Team Prayas</span>
+        </a>
+        <p class="footer-desc">A premium green animal sanctuary in Surat dedicated to spaying, emergency trauma rescue, and permanent pet rehoming. Operating since 2018.</p>
+        <div class="social-icons">
+          <a href="https://www.instagram.com/teamprayas?igsh=amF1OXE2MnE0MHA1" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="https://www.facebook.com/PrayasINDIA/" target="_blank" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h3>Quick Links</h3>
+        <ul class="footer-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="adoption.html">Adopt Animals</a></li>
+          <li><a href="gallery.html">Photo Gallery</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h3>Surat Shelter Contact</h3>
+        <ul class="footer-contact-details">
+          <li><i class="fa-solid fa-phone"></i> <a href="tel:+919825119081" style="font-weight:700; color:var(--white);">+91 98251 19081</a></li>
+          <li><i class="fa-solid fa-envelope"></i> <a href="mailto:info@prayas-india.org">info@prayas-india.org</a></li>
+          <li><i class="fa-solid fa-location-dot"></i> 327 Silent Zone Plots, Opp. Airport, Dumas Road, Surat</li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <div class="container footer-bottom-container">
+        <p>&copy; 2026 Team Prayas - Rescue and Animal Adoption NGO. All rights reserved.</p>
+        <a href="admin.html" class="admin-portal-link" style="color:#81C784;" target="_blank"><i class="fa-solid fa-lock"></i> Administrator Portal</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/main.js"></script>
+  <script src="js/gallery.js"></script>
+</body>
+</html>

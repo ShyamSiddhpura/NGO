@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us - Team Prayas Animal Shelter</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Split Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  
+  <style>
+    /* Custom Journey timeline styles */
+    .timeline-container {
+      position: relative;
+      max-width: 800px;
+      margin: 40px auto 0;
+      padding-left: 30px;
+      border-left: 3px solid var(--primary-light);
+    }
+    .timeline-node {
+      position: relative;
+      padding-bottom: 40px;
+    }
+    .timeline-node::before {
+      content: '';
+      position: absolute;
+      left: -37px;
+      top: 5px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background-color: var(--primary-color);
+      border: 3px solid var(--white);
+      box-shadow: 0 0 0 4px var(--primary-light);
+    }
+    .timeline-year {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--primary-color);
+      margin-bottom: 5px;
+    }
+    .timeline-node h3 {
+      font-size: 1.15rem;
+      margin-bottom: 8px;
+    }
+    .timeline-node p {
+      color: var(--muted-slate);
+      font-size: 0.95rem;
+    }
+    
+    /* Custom Team avatar styles */
+    .team-avatar-circle {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background-color: var(--primary-light);
+      color: var(--primary-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      margin: 0 auto 20px;
+    }
+    .team-card {
+      text-align: center;
+    }
+    .team-role {
+      color: var(--primary-color);
+      font-weight: 600;
+      font-size: 0.85rem;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="main-header">
+    <div class="container header-container">
+      <a href="index.html" class="logo">
+        <i class="fa-solid fa-paw logo-icon"></i>
+        <span class="logo-text">Team <span class="accent-text">Prayas</span></span>
+      </a>
+      
+      <nav class="nav-menu" id="nav-menu-desktop">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="about.html" class="nav-link active">About</a>
+        <a href="adoption.html" class="nav-link">Adopt</a>
+        <a href="gallery.html" class="nav-link">Gallery</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+        <a href="adoption.html" class="btn btn-gradient btn-nav">Apply Now</a>
+        
+        <a href="admin.html" class="admin-login-nav-item" title="Admin Login" target="_blank">
+          <i class="fa-solid fa-lock"></i>
+        </a>
+      </nav>
+
+      <button class="mobile-nav-toggle" id="mobile-toggle" aria-label="Toggle navigation menu">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Slide Drawer -->
+  <div class="mobile-menu-overlay" id="mobile-menu-overlay"></div>
+  <div class="mobile-menu-drawer" id="mobile-menu-drawer">
+    <div class="mobile-drawer-header">
+      <a href="index.html" class="logo">
+        <i class="fa-solid fa-paw logo-icon"></i>
+        <span class="logo-text">Team Prayas</span>
+      </a>
+      <button class="mobile-menu-close" id="mobile-close" aria-label="Close navigation menu">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <nav class="mobile-drawer-links">
+      <a href="index.html" class="mobile-link">Home</a>
+      <a href="about.html" class="mobile-link active">About</a>
+      <a href="adoption.html" class="mobile-link">Adopt</a>
+      <a href="gallery.html" class="mobile-link">Gallery</a>
+      <a href="contact.html" class="mobile-link">Contact</a>
+      <a href="adoption.html" class="btn btn-gradient mobile-cta">Apply Now</a>
+      
+      <a href="admin.html" class="mobile-admin-link" target="_blank">
+        <i class="fa-solid fa-lock"></i> Admin Portal
+      </a>
+    </nav>
+  </div>
+
+  <!-- Internal Hero Banner header -->
+  <section class="internal-hero" style="background-image: url('assets/images/gallery4.jpg');">
+    <div class="internal-hero-overlay"></div>
+    <div class="container text-center">
+      <h1 class="animate-up" style="font-size: 3rem;">About Team Prayas</h1>
+      <p class="animate-up" style="margin-top: 10px; font-size: 1.15rem; color: rgba(255,255,255,0.9);">Our mission, vision, caretakers, and history of rescue operations in Surat.</p>
+    </div>
+  </section>
+
+  <!-- Main about layout -->
+  <main class="page-offset-container" style="margin-top:0;">
+    
+    <!-- Introduction Section -->
+    <section class="section-padding bg-white">
+      <div class="container">
+        <div class="grid grid-2-col align-center">
+          <div>
+            <span class="section-subtitle">Who We Are</span>
+            <h2 class="section-title">A Sanctuary Built on Compassion</h2>
+            <p class="section-desc">Team Prayas was born out of a desire to prevent the suffering of stray street animals in Surat. We operate a fully equipped open sanctuary aligned with green trees, where animals recover from severe injuries, trauma, or neglect. All rescue operations, ambulance dispatch, and surgeries are supervised by our qualified veterinary professionals.</p>
+          </div>
+          <div>
+            <div class="grid grid-2-col">
+              <div class="card shadow-small text-center">
+                <i class="fa-solid fa-bullseye" style="font-size:2.2rem; color:var(--primary-color); margin-bottom:15px;"></i>
+                <h3>Our Mission</h3>
+                <p style="color:var(--muted-slate); font-size:0.9rem; margin-top:8px;">To offer emergency first-aid trauma response, support safe spaying operations, and rehome healthy pets with verified adopters.</p>
+              </div>
+              <div class="card shadow-small text-center">
+                <i class="fa-solid fa-eye" style="font-size:2.2rem; color:var(--primary-color); margin-bottom:15px;"></i>
+                <h3>Our Vision</h3>
+                <p style="color:var(--muted-slate); font-size:0.9rem; margin-top:8px;">A urban community where stray cats and dogs live safely in harmony with residents, protected by mass Rabies vaccines.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Achievements Journey Timeline -->
+    <section class="section-padding bg-light reveal">
+      <div class="container">
+        <div class="text-center">
+          <span class="section-subtitle">Our Timeline</span>
+          <h2 class="section-title">The Journey of Team Prayas</h2>
+          <p class="section-desc max-w-600">Trace our growth and achievements since our primary founding operations in Surat.</p>
+        </div>
+
+        <div class="timeline-container">
+          <div class="timeline-node">
+            <div class="timeline-year">2018</div>
+            <h3>NGO Founded</h3>
+            <p>Started as a small group of rescue volunteers response teams feeding stray street dogs and rescuing injured kittens using personal transport.</p>
+          </div>
+          <div class="timeline-node">
+            <div class="timeline-year">2020</div>
+            <h3>Helper Ambulance Launch</h3>
+            <p>Acquired our first custom rescue ambulance vehicle, supporting a 24/7 medical trauma dispatch helpline for local residents in Surat.</p>
+          </div>
+          <div class="timeline-node">
+            <div class="timeline-year">2023</div>
+            <h3>Surat Shelter Relocation</h3>
+            <p>Relocated to our current green plots opposite the airport on Dumas Road. Built spacious open-air cages, quarantine units, and a vet clinic.</p>
+          </div>
+          <div class="timeline-node" style="padding-bottom:0;">
+            <div class="timeline-year">2026</div>
+            <h3>5,000+ Spayed & Neutered</h3>
+            <p>Milestone reached of performing safe Birth Control surgeries on over 5,000 stray cats and dogs, significantly improving urban health.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Meet Our Team Section -->
+    <section class="section-padding bg-white reveal">
+      <div class="container text-center">
+        <span class="section-subtitle">The Caretakers</span>
+        <h2 class="section-title">Meet Our Dedicated Team</h2>
+        <p class="section-desc max-w-600">The veterinary doctors and operations managers working round the clock for stray welfare.</p>
+        
+        <div class="grid grid-3-col margin-top-large">
+          <div class="card team-card">
+            <div class="team-avatar-circle"><i class="fa-solid fa-user-doctor"></i></div>
+            <h3>Dr. Aravind Sharma</h3>
+            <span class="team-role">Chief Veterinary Surgeon</span>
+            <p style="color:var(--muted-slate); font-size:0.9rem;">With 12+ years of trauma veterinary experience, Dr. Aravind supervises orthopedic first-aid and neutering surgeries.</p>
+          </div>
+          <div class="card team-card">
+            <div class="team-avatar-circle"><i class="fa-solid fa-house-medical"></i></div>
+            <h3>Rohan Verma</h3>
+            <span class="team-role">Rescue Operations Lead</span>
+            <p style="color:var(--muted-slate); font-size:0.9rem;">Manages the Surat ambulance fleet, coordination of dispatch calls, and emergency street rescues.</p>
+          </div>
+          <div class="card team-card">
+            <div class="team-avatar-circle"><i class="fa-solid fa-hands-holding-child"></i></div>
+            <h3>Sneha Patel</h3>
+            <span class="team-role">Adoptions Coordinator</span>
+            <p style="color:var(--muted-slate); font-size:0.9rem;">Reviews registrations, performs home safety audits, and pairs rescued animals with loving permanent homes.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="main-footer">
+    <div class="container footer-grid">
+      <div class="footer-col footer-brand">
+        <a href="index.html" class="logo footer-logo">
+          <i class="fa-solid fa-paw logo-icon"></i>
+          <span class="logo-text">Team Prayas</span>
+        </a>
+        <p class="footer-desc">A premium green animal sanctuary in Surat dedicated to spaying, emergency trauma rescue, and permanent pet rehoming. Operating since 2018.</p>
+        <div class="social-icons">
+          <a href="https://www.instagram.com/teamprayas?igsh=amF1OXE2MnE0MHA1" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="https://www.facebook.com/PrayasINDIA/" target="_blank" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h3>Quick Links</h3>
+        <ul class="footer-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="adoption.html">Adopt Animals</a></li>
+          <li><a href="gallery.html">Photo Gallery</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h3>Surat Shelter Contact</h3>
+        <ul class="footer-contact-details">
+          <li><i class="fa-solid fa-phone"></i> <a href="tel:+919825119081" style="font-weight:700; color:var(--white);">+91 98251 19081</a></li>
+          <li><i class="fa-solid fa-envelope"></i> <a href="mailto:info@prayas-india.org">info@prayas-india.org</a></li>
+          <li><i class="fa-solid fa-location-dot"></i> 327 Silent Zone Plots, Opp. Airport, Dumas Road, Surat</li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <div class="container footer-bottom-container">
+        <p>&copy; 2026 Team Prayas - Rescue and Animal Adoption NGO. All rights reserved.</p>
+        <a href="admin.html" class="admin-portal-link" style="color:#81C784;" target="_blank"><i class="fa-solid fa-lock"></i> Administrator Portal</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/main.js"></script>
+</body>
+</html>

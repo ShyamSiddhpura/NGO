@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Team Prayas - Secure Administrator Portal</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <!-- Admin Specific Stylesheet -->
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+  <!-- 1. SECURE LOGIN SCREEN PANEL -->
+  <div class="login-screen-overlay" id="admin-login-screen">
+    <div class="login-card shadow-large animate-up" id="login-card-container">
+      <div class="login-header text-center">
+        <i class="fa-solid fa-paw login-logo-icon"></i>
+        <h2>Team Prayas</h2>
+        <p>Admin Portal Secure Login</p>
+      </div>
+      
+      <form id="admin-login-form" novalidate>
+        <div class="form-group">
+          <label for="login-username">Username</label>
+          <div class="input-icon-wrapper">
+            <i class="fa-solid fa-user input-icon"></i>
+            <input type="text" id="login-username" required placeholder="Enter username" autocomplete="username">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="login-password">Password</label>
+          <div class="input-icon-wrapper">
+            <i class="fa-solid fa-lock input-icon"></i>
+            <input type="password" id="login-password" required placeholder="Enter password" autocomplete="current-password">
+          </div>
+        </div>
+        <button type="submit" class="btn btn-gradient btn-full margin-top-small">Sign In <i class="fa-solid fa-sign-in-alt"></i></button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 2. MAIN ADMINISTRATOR WORKSPACE -->
+  <div class="admin-workspace hidden" id="admin-dashboard-container">
+    
+    <!-- Sidebar collapsible drawer -->
+    <aside class="admin-sidebar" id="admin-sidebar">
+      <div class="sidebar-brand">
+        <i class="fa-solid fa-paw brand-icon"></i>
+        <span>Prayas Admin</span>
+      </div>
+      
+      <nav class="sidebar-links">
+        <a href="#dashboard" class="sidebar-link active" data-panel="dashboard">
+          <i class="fa-solid fa-chart-pie"></i> <span>Dashboard</span>
+        </a>
+        <a href="#applications" class="sidebar-link" data-panel="applications">
+          <i class="fa-solid fa-file-invoice"></i> <span>Applications</span>
+        </a>
+        <a href="#analytics" class="sidebar-link" data-panel="analytics">
+          <i class="fa-solid fa-chart-simple"></i> <span>Analytics</span>
+        </a>
+        <a href="#settings" class="sidebar-link" data-panel="settings">
+          <i class="fa-solid fa-gears"></i> <span>Settings</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button class="btn btn-outline-white btn-full" id="admin-logout-btn">
+          <i class="fa-solid fa-right-from-bracket"></i> <span>Logout</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content Area wrapper -->
+    <div class="admin-main">
+      
+      <!-- Top header bar -->
+      <header class="admin-topbar">
+        <button class="sidebar-toggle" id="sidebar-toggle-btn" aria-label="Toggle Sidebar">
+          <i class="fa-solid fa-bars-staggered"></i>
+        </button>
+        <h1 class="topbar-title" id="page-panel-title">Dashboard</h1>
+        
+        <div class="topbar-profile">
+          <div class="profile-info">
+            <span class="profile-name">Administrator</span>
+            <span class="profile-role">dev_mode</span>
+          </div>
+          <div class="profile-avatar">
+            <i class="fa-solid fa-user-gear"></i>
+          </div>
+        </div>
+      </header>
+
+      <!-- Panel Content Switcher -->
+      <main class="admin-panel-container">
+
+        <!-- PANEL A: DASHBOARD -->
+        <section id="panel-dashboard" class="admin-panel active">
+          <!-- Statistics Cards Grid -->
+          <div class="stats-grid">
+            <div class="dashboard-stat-card card-total">
+              <div class="stat-card-left">
+                <span class="stat-card-title">Total Applications</span>
+                <span class="stat-card-val" id="val-total-apps">0</span>
+              </div>
+              <div class="stat-card-icon"><i class="fa-solid fa-folder-open"></i></div>
+            </div>
+            
+            <div class="dashboard-stat-card card-pending">
+              <div class="stat-card-left">
+                <span class="stat-card-title">Pending</span>
+                <span class="stat-card-val" id="val-pending-apps">0</span>
+              </div>
+              <div class="stat-card-icon"><i class="fa-solid fa-hourglass-half"></i></div>
+            </div>
+
+            <div class="dashboard-stat-card card-approved">
+              <div class="stat-card-left">
+                <span class="stat-card-title">Approved</span>
+                <span class="stat-card-val" id="val-approved-apps">0</span>
+              </div>
+              <div class="stat-card-icon"><i class="fa-solid fa-circle-check"></i></div>
+            </div>
+
+            <div class="dashboard-stat-card card-rejected">
+              <div class="stat-card-left">
+                <span class="stat-card-title">Rejected</span>
+                <span class="stat-card-val" id="val-rejected-apps">0</span>
+              </div>
+              <div class="stat-card-icon"><i class="fa-solid fa-circle-xmark"></i></div>
+            </div>
+          </div>
+
+          <div class="stats-grid margin-top-medium">
+            <div class="dashboard-stat-card card-today">
+              <div class="stat-card-left">
+                <span class="stat-card-title">Today's Applications</span>
+                <span class="stat-card-val" id="val-today-apps">0</span>
+              </div>
+              <div class="stat-card-icon"><i class="fa-solid fa-calendar-day"></i></div>
+            </div>
+
+            <div class="dashboard-stat-card card-weekly">
+              <div class="stat-card-left">
+                <span class="stat-card-title">Weekly Applications</span>
+                <span class="stat-card-val" id="val-weekly-apps">0</span>
+              </div>
+              <div class="stat-card-icon"><i class="fa-solid fa-calendar-week"></i></div>
+            </div>
+          </div>
+
+          <!-- Timeline log feed of general activities -->
+          <div class="dashboard-layout-2 margin-top-large">
+            <div class="card shadow-small">
+              <h3><i class="fa-solid fa-clock-rotate-left card-icon-green"></i> Live Activity Feed</h3>
+              <p class="timeline-helper-text">Action logs of all adoption applications registered inside system.</p>
+              
+              <ul class="activity-timeline-feed" id="dashboard-activity-feed">
+                <!-- Loaded dynamically via js/admin.js -->
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- PANEL B: APPLICATIONS TABLE -->
+        <section id="panel-applications" class="admin-panel">
+          <div class="card shadow-small">
+            
+            <!-- Controls row -->
+            <div class="table-controls-wrapper">
+              <div class="table-search-box">
+                <i class="fa-solid fa-magnifying-glass table-search-icon"></i>
+                <input type="text" id="table-search" placeholder="Search by name, email, or phone...">
+              </div>
+              
+              <div class="table-filter-tabs" id="table-filter-tabs">
+                <button class="filter-tab-btn active" data-filter="All">All</button>
+                <button class="filter-tab-btn" data-filter="Pending">Pending</button>
+                <button class="filter-tab-btn" data-filter="Under Review">Under Review</button>
+                <button class="filter-tab-btn" data-filter="Approved">Approved</button>
+                <button class="filter-tab-btn" data-filter="Rejected">Rejected</button>
+              </div>
+            </div>
+
+            <!-- Table grid -->
+            <div class="table-container">
+              <table class="applications-table" id="applications-table">
+                <thead>
+                  <tr>
+                    <th class="sortable" data-sort="id">ID <i class="fa-solid fa-sort sort-icon"></i></th>
+                    <th class="sortable" data-sort="name">Applicant Name <i class="fa-solid fa-sort sort-icon"></i></th>
+                    <th>Mobile</th>
+                    <th>Email</th>
+                    <th class="sortable" data-sort="animal">Preferred Pet <i class="fa-solid fa-sort sort-icon"></i></th>
+                    <th class="sortable" data-sort="date">Submitted Date <i class="fa-solid fa-sort sort-icon"></i></th>
+                    <th class="sortable" data-sort="status">Status <i class="fa-solid fa-sort sort-icon"></i></th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="table-body">
+                  <!-- Generated dynamically via JS -->
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Pagination footer -->
+            <div class="table-pagination-footer">
+              <span class="pagination-info" id="pagination-info">Showing 1 to 5 of 5 entries</span>
+              <div class="pagination-btns">
+                <button class="btn btn-secondary pagination-btn" id="btn-page-prev"><i class="fa-solid fa-chevron-left"></i> Previous</button>
+                <button class="btn btn-secondary pagination-btn" id="btn-page-next">Next <i class="fa-solid fa-chevron-right"></i></button>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- PANEL C: APPLICANT DETAILS -->
+        <section id="panel-details" class="admin-panel">
+          <button class="btn btn-secondary" id="details-back-btn">
+            <i class="fa-solid fa-arrow-left"></i> Back to Listings
+          </button>
+          
+          <div class="details-layout margin-top-medium">
+            <!-- Profile Sheet -->
+            <div class="details-profile-card card shadow-small">
+              <div class="details-profile-header">
+                <div class="profile-meta-left">
+                  <h2 id="det-name">John Doe</h2>
+                  <p class="det-app-id" id="det-id">APP-2026-0000</p>
+                  <span class="det-status-badge" id="det-status">Pending</span>
+                </div>
+                <div class="profile-actions-right">
+                  <button class="btn btn-secondary" id="btn-print-app"><i class="fa-solid fa-print"></i> Print / Save PDF</button>
+                  <button class="btn btn-outline-red" id="btn-delete-app"><i class="fa-solid fa-trash-can"></i> Delete</button>
+                </div>
+              </div>
+
+              <!-- General details fields -->
+              <div class="details-grid-fields margin-top-medium">
+                <div class="detail-field-item">
+                  <span class="field-label">Age / Gender</span>
+                  <span class="field-val" id="det-age-gender">25 / Male</span>
+                </div>
+                <div class="detail-field-item">
+                  <span class="field-label">Occupation</span>
+                  <span class="field-val" id="det-occupation">Engineer</span>
+                </div>
+                <div class="detail-field-item">
+                  <span class="field-label">Phone</span>
+                  <span class="field-val" id="det-phone">9825112345</span>
+                </div>
+                <div class="detail-field-item">
+                  <span class="field-label">Email</span>
+                  <span class="field-val" id="det-email">john@example.com</span>
+                </div>
+                <div class="detail-field-item double-column">
+                  <span class="field-label">Street Address</span>
+                  <span class="field-val" id="det-address">Dumas Road, Surat</span>
+                </div>
+                <div class="detail-field-item">
+                  <span class="field-label">Housing / Ownership</span>
+                  <span class="field-val" id="det-house">Apartment (Own)</span>
+                </div>
+                <div class="detail-field-item">
+                  <span class="field-label">Family Details</span>
+                  <span class="field-val" id="det-family">4 members</span>
+                </div>
+                <div class="detail-field-item">
+                  <span class="field-label">Preferred Pet</span>
+                  <span class="field-val" id="det-animal">Rocky (Golden Retriever)</span>
+                </div>
+                <div class="detail-field-item">
+                  <span class="field-label">Pet Experience</span>
+                  <span class="field-val" id="det-experience">Have owned pets before</span>
+                </div>
+                <div class="detail-field-item double-column">
+                  <span class="field-label">Adoption Reason</span>
+                  <span class="field-val textarea-val" id="det-reason">Why adopt reason...</span>
+                </div>
+                <div class="detail-field-item double-column">
+                  <span class="field-label">Metadata Uploads</span>
+                  <span class="field-val" id="det-photo">filename.jpg</span>
+                </div>
+              </div>
+
+              <!-- Status Action Panel buttons -->
+              <div class="status-action-box margin-top-large">
+                <h3>Update Application Status</h3>
+                <div class="status-btn-row margin-top-small">
+                  <button class="status-change-btn btn-status-pending" data-status="Pending">
+                    <i class="fa-solid fa-hourglass-half"></i> Pending
+                  </button>
+                  <button class="status-change-btn btn-status-review" data-status="Under Review">
+                    <i class="fa-solid fa-magnifying-glass"></i> Under Review
+                  </button>
+                  <button class="status-change-btn btn-status-approved" data-status="Approved">
+                    <i class="fa-solid fa-circle-check"></i> Approve
+                  </button>
+                  <button class="status-change-btn btn-status-rejected" data-status="Rejected">
+                    <i class="fa-solid fa-circle-xmark"></i> Reject
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Notes logs right widgets -->
+            <div class="details-meta-column">
+              <!-- Internal Notes Panel -->
+              <div class="card shadow-small">
+                <h3><i class="fa-solid fa-note-sticky card-icon-green"></i> Internal Admin Notes</h3>
+                
+                <form id="details-add-note-form" class="margin-top-small">
+                  <textarea id="note-text-input" rows="3" required placeholder="Type an internal note here..."></textarea>
+                  <button type="submit" class="btn btn-gradient btn-full margin-top-small" id="note-submit-btn">
+                    Add Note <i class="fa-solid fa-plus"></i>
+                  </button>
+                </form>
+
+                <ul class="notes-list margin-top-medium" id="det-notes-list">
+                  <!-- Dynamically populated via JS -->
+                </ul>
+              </div>
+
+              <!-- Audit Timeline -->
+              <div class="card shadow-small margin-top-medium">
+                <h3><i class="fa-solid fa-list-check card-icon-green"></i> Activity timeline</h3>
+                <ul class="application-history-timeline" id="det-history-list">
+                  <!-- Dynamically populated via JS -->
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- PANEL D: ANALYTICS -->
+        <section id="panel-analytics" class="admin-panel">
+          <div class="analytics-grid">
+            <!-- Chart 1: Monthly applications volume -->
+            <div class="chart-card card shadow-small">
+              <h3>Monthly Applications Volume</h3>
+              <p class="chart-helper">Total applications logged in current calendar year</p>
+              <div class="chart-canvas-container" id="bar-chart-container">
+                <!-- Dynamically generated SVG Bar chart -->
+              </div>
+            </div>
+
+            <!-- Chart 2: Categories breakdown -->
+            <div class="chart-card card shadow-small">
+              <h3>Animal Categories Interest</h3>
+              <p class="chart-helper">Ratio of Dogs, Cats vs Other requests</p>
+              <div class="chart-canvas-container" id="donut-chart-container">
+                <!-- Dynamically generated SVG Donut chart -->
+              </div>
+            </div>
+
+            <!-- Chart 3: Approval rate pie -->
+            <div class="chart-card card shadow-small">
+              <h3>Adoption Status Breakdown</h3>
+              <p class="chart-helper">Percentage share of Approved, Pending, Review & Rejected states</p>
+              <div class="chart-canvas-container" id="status-chart-container">
+                <!-- Dynamically generated SVG Status Pie chart -->
+              </div>
+            </div>
+
+            <!-- Chart 4: Weekly submissions line -->
+            <div class="chart-card card shadow-small">
+              <h3>Weekly Submissions Trend</h3>
+              <p class="chart-helper">Applications received over last 7 days</p>
+              <div class="chart-canvas-container" id="line-chart-container">
+                <!-- Dynamically generated SVG Line chart -->
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- PANEL E: SETTINGS -->
+        <section id="panel-settings" class="admin-panel">
+          <div class="card shadow-small max-w-600">
+            <h3>Update Administrator Credentials</h3>
+            <p class="settings-helper-text">Change administrator credentials stored inside browser local storage database.</p>
+            
+            <form id="admin-settings-form" class="margin-top-medium">
+              <div class="form-group">
+                <label for="settings-username">Admin Username</label>
+                <input type="text" id="settings-username" required placeholder="admin_dev">
+              </div>
+              <div class="form-group">
+                <label for="settings-password">New Password</label>
+                <input type="password" id="settings-password" required placeholder="1234">
+              </div>
+              <button type="submit" class="btn btn-gradient margin-top-small">Save Settings <i class="fa-solid fa-floppy-disk"></i></button>
+            </form>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- Printer print wrapper -->
+  <div class="print-container" id="print-container"></div>
+
+  <!-- Admin Toast Container -->
+  <div class="toast-container" id="admin-toast-container"></div>
+
+  <!-- Admin Scripts -->
+  <script src="js/admin.js"></script>
+</body>
+</html>
